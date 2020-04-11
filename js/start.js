@@ -96,9 +96,8 @@ var vue_options = {
             return this.characteristics.get(uuid).writeValue(data);
         },
         onDataChanged(event){
-            console.log('onDataChanged');
+//            console.log('onDataChanged');
             let characteristic = event.target;
-            console.log(characteristic.uuid);
     
             var value = characteristic.value;
             switch(characteristic.uuid){
