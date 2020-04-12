@@ -4,12 +4,14 @@
 
 const UUID_SERVICE_ACCEL = "e95d0753-251d-470a-a062-fa1922dfa9a8";
 const UUID_CHAR_ACCEL = "e95dca4b-251d-470a-a062-fa1922dfa9a8";
+const UUID_CHAR_ACCEL_PERIOD = "e95dfb24-251d-470a-a062-fa1922dfa9a8";
 const UUID_SERVICE_UART = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const UUID_CHAR_UART_RX = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
 const UUID_CHAR_UART_TX = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
 
 const POWER_MAX = 50;
 const CHECK_INTERVAL = 50;
+const NOTIFY_PERIOD = 100;
 
 var vue_options = {
     el: "#top",
@@ -58,7 +60,9 @@ var vue_options = {
             var service = await server.getPrimaryService(UUID_SERVICE_ACCEL);
             console.log('Execute : getCharacteristic');
         
+            await this.setCharacteristic(service, UUID_CHAR_ACCEL_PERIOD);
             await this.setCharacteristic(service, UUID_CHAR_ACCEL);
+            await this.writeChar(UUID_CHAR_ACCEL_PERIOD, new Uint16Array([NOTIFY_PERIOD]));
             await this.startNotify(UUID_CHAR_ACCEL);
 
             this.deviceName = this.bluetoothDevice.name;
